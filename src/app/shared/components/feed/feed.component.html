@@ -1,0 +1,47 @@
+<ng-container *ngIf="data$ | async as data">
+  <mc-loading *ngIf="data.isLoading" />
+  <mc-error-message *ngIf="data.error" [message]="data.error">
+    {{ data.error }}
+  </mc-error-message>
+  <div *ngIf="data.feed">
+    <div class="border-b py-4 my-5" *ngFor="let article of data.feed.articles">
+      <div>
+        <div class="flex justify-between">
+          <div>
+            <a class="flex" [routerLink]="['/profiles',article.author.username]">
+              <img class="rounded-full w-10 h-10" [src]="article.author.image" />
+              <div class="ml-2">
+                <h5 class="text-base text-yellow-800 font-bold">
+                  {{article.author.username}}
+                </h5>
+                <h6 class="text-xs text-gray-600 font-semibold font-sans">
+                  {{article.createdAt | date:'medium'}}
+                </h6>
+              </div>
+            </a>
+          </div>
+          <div>
+            favorite
+          </div>
+        </div>
+        <h1 class="text-xl mt-2 font-semibold">
+          <a class="text-slate-900" [routerLink]="['/articles',article.slug]">
+            {{article.title}}
+          </a>
+        </h1>
+        <p class="text-slate-500 pt-2">
+          {{article.description}}
+        </p>
+        <div class="flex items-center gap-4 mt-4">
+          <div class="text-green-600">
+            Read more...
+          </div>
+          <div>
+            <mc-tags [tags]="article.tagList"></mc-tags>
+          </div>
+        </div>
+      </div>
+    </div>
+    <mc-pagination [total]="data.feed.articlesCount" [limit]="limit" [url]="baseUrl" [currentPage]="currentPage" />
+  </div>
+</ng-container>

@@ -1,0 +1,41 @@
+<ng-container *ngIf="data$ | async as data">
+  <div class="bg-gray-700 py-12 mx-auto" *ngIf="data.article">
+    <div class="container mx-auto">
+      <h1 class="text-4xl my-4 text-white font-semibold">{{data.article.title}}</h1>
+      <div class="flex gap-2">
+        <a [routerLink]="['/profiles',data.article.author.username]">
+          <img class="rounded-full" [src]="data.article.author.image" />
+        </a>
+        <span class="text-green-400">
+          {{
+          data.article.author.username
+          }}
+        </span>
+        <span class="text-green-200">
+          {{ data.article.createdAt }}
+        </span>
+      </div>
+      <span *ngIf="data.isAuthor">
+        <a [routerLink]="['/profiles',data.article.slug,'edit']">
+          Edit
+        </a>
+        <button>
+          Delete Article
+        </button>
+      </span>
+    </div>
+  </div>
+  <div class="container mx-auto">
+    <mc-loading *ngIf="data.isLoading"></mc-loading>
+    <mc-error-message *ngIf="data.error"></mc-error-message>
+
+    <div class="py-10" *ngIf="data.article">
+      <div [innerHTML]="data.article.body">
+      </div>
+      <div class="my-5"></div>
+      <mc-tags [tags]="data.article.tagList"></mc-tags>
+
+    </div>
+  </div>
+
+</ng-container>

@@ -1,0 +1,41 @@
+<ng-container *ngIf="data$ | async as data">
+  <div class="container mx-auto border-b">
+    <div class="flex py-4 justify-between">
+      <a routerLink="/" class="text-green-400 text-2xl font-bold">medium</a>
+      <ul class="flex gap-x-5">
+        <li>
+          Home
+        </li>
+        <ng-container *ngIf="data.currentUser">
+          <li>
+            <a routerLink="/articles/new">Create New</a>
+          </li>
+          <li>
+            <a routerLink="/settings">Settings</a>
+          </li>
+          <li>
+            <a [routerLink]="['/profiles',data.currentUser.username]">
+              <img [src]="data.currentUser.image" alt="">
+              {{ data.currentUser.username }}
+            </a>
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="data.currentUser === undefined">
+          <li>
+            <a routerLink="/login">
+              Login
+            </a>
+          </li>
+          <li>
+            <a routerLink="/register">
+              Register
+            </a>
+          </li>
+        </ng-container>
+
+
+      </ul>
+    </div>
+  </div>
+</ng-container>

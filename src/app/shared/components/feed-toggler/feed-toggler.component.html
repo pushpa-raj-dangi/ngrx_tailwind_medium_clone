@@ -1,0 +1,26 @@
+<style>
+  .active {
+    border-bottom-color: red;
+    border-bottom-width: 2px;
+    color: green;
+  }
+
+</style>
+
+<ul class="flex gap-2 space-x-5 border-b-2">
+  <li *ngIf="currentUser$ | async">
+    <a routerLink="/feed" routerLinkActive="active">
+      Your feed
+    </a>
+  </li>
+  <li>
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" queryParamsHandling="merge">
+      Global feed
+    </a>
+  </li>
+  <li *ngIf="tagName">
+    <a [routerLink]="['/tags',tagName]" routerLinkActive="active">
+      #{{ tagName }}
+    </a>
+  </li>
+</ul>

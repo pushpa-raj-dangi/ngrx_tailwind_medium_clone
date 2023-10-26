@@ -1,0 +1,8 @@
+<ul class="flex justify-center gap-2">
+  <li *ngFor="let page of pages" class="p-2 px-4 border rounded-md"
+    [ngClass]="{'bg-green-500 text-white': currentPage===page}">
+    <a [routerLink]="url" [queryParams]="{page: page}">
+      {{ page }}
+    </a>
+  </li>
+</ul>
